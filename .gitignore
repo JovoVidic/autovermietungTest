@@ -1,0 +1,58 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Additional Spring Boot / Java ###
+*.log
+*.out
+*.tmp
+*.bak
+*.swp
+
+# Ignoriere sensible Konfigurationen (falls Passwörter enthalten sind)
+application-*.properties
+application-*.yml
+
+# OS-spezifische Dateien
+.DS_Store
+Thumbs.db
+
+# Test- und Analyseberichte
+/coverage/
+/jacoco.exec
+/.scannerwork/
+
+# Build-Tools und Output-Verzeichnisse
+/bin/
+/build/
+/out/
