@@ -18,8 +18,9 @@ public class Auto {
     public Auto() {
     }
 
-    public Auto(String marke, String modell, String kennzeichen, boolean verfuegbar, double preisProTag) {
-        this.marke = marke;
+    public Auto(Long id, String marke, String modell, String kennzeichen, boolean verfuegbar, double preisProTag) {
+    	this.id = id;
+    	this.marke = marke;
         this.modell = modell;
         this.kennzeichen = kennzeichen;
         this.verfuegbar = verfuegbar;

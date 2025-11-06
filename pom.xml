@@ -54,7 +54,7 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- JPA / Datenbank -->
+		<!-- JPA / Datenbank / PostgreSQL-->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -63,9 +63,7 @@
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <scope>runtime</scope>
-        <version>42.7.8</version>
-        
-    </dependency>
+        </dependency>
     
 		<dependency>
 			<groupId>org.projectlombok</groupId>
