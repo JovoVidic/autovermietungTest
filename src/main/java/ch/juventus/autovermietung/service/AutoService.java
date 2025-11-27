@@ -7,11 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AutoService {
-
-    private static final Logger logger = LoggerFactory.getLogger(AutoService.class);
 
     private final AutoRepository autoRepository;
 
@@ -19,13 +18,40 @@ public class AutoService {
         this.autoRepository = autoRepository;
     }
 
-    public List<Auto> getAlleAutos() {
-        logger.info("Alle Autos werden aus der Datenbank geladen.");
+    // CREATE
+    public Auto createAuto(Auto auto) {
+        return autoRepository.save(auto);
+    }
+
+    // READ – alle Autos
+    public List<Auto> getAllAutos() {
         return autoRepository.findAll();
     }
 
-    public Auto neuesAutoHinzufuegen(Auto auto) {
-        logger.info("Neues Auto wird gespeichert: {}", auto.getKennzeichen());
-        return autoRepository.save(auto);
+    // READ – einzelnes Auto
+    public Optional<Auto> getAutoById(Long id) {
+        return autoRepository.findById(id);
+    }
+
+    // UPDATE
+    public Optional<Auto> updateAuto(Long id, Auto updatedAuto) {
+        return autoRepository.findById(id)
+                .map(existingAuto -> {
+                    existingAuto.setMarke(updatedAuto.getMarke());
+                    existingAuto.setModell(updatedAuto.getModell());
+                    existingAuto.setKennzeichen(updatedAuto.getKennzeichen());
+                    existingAuto.setVerfuegbar(updatedAuto.isVerfuegbar());
+                    existingAuto.setPreisProTag(updatedAuto.getPreisProTag());
+                    return autoRepository.save(existingAuto);
+                });
+    }
+
+    // DELETE
+    public boolean deleteAuto(Long id) {
+        if (autoRepository.existsById(id)) {
+            autoRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

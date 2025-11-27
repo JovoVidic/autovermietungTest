@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -18,35 +19,83 @@ class AutoServiceTest {
     private AutoService autoService;
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         autoRepository = Mockito.mock(AutoRepository.class);
         autoService = new AutoService(autoRepository);
     }
 
     @Test
-    void testGetAlleAutos() {
-        Auto auto1 = new Auto(1L, "VW", "Golf", "ZH123", true, 50.0);
-        Auto auto2 = new Auto(2L, "BMW", "X3", "ZH456", true, 80.0);
+    void testCreateAuto() {
+        Auto auto = new Auto(null, "BMW", "X5", "ZH123456", true, 99.0);
 
-        when(autoRepository.findAll()).thenReturn(Arrays.asList(auto1, auto2));
+        when(autoRepository.save(auto)).thenReturn(new Auto(1L, "BMW", "X5", "ZH123456", true, 99.0));
 
-        List<Auto> autos = autoService.getAlleAutos();
+        Auto result = autoService.createAuto(auto);
 
-        assertEquals(2, autos.size());
+        assertNotNull(result.getId());
+        assertEquals("BMW", result.getMarke());
+        verify(autoRepository, times(1)).save(auto);
+    }
+
+    @Test
+    void testGetAllAutos() {
+        List<Auto> autos = List.of(
+                new Auto(1L, "Audi", "A4", "ZH111111", true, 50.0),
+                new Auto(2L, "VW", "Golf", "ZH222222", true, 60.0)
+        );
+
+        when(autoRepository.findAll()).thenReturn(autos);
+
+        List<Auto> result = autoService.getAllAutos();
+
+        assertEquals(2, result.size());
         verify(autoRepository, times(1)).findAll();
     }
 
     @Test
-    void testNeuesAutoHinzufuegen() {
-        Auto auto = new Auto(2L, "Audi", "A4", "ZH789", true, 70.0);
-        Auto gespeichertesAuto = new Auto(1L, "Audi", "A4", "ZH789", true, 70.0);
+    void testGetAutoById() {
+        Auto auto = new Auto(1L, "Tesla", "Model 3", "ZH333333", true, 120.0);
 
-        when(autoRepository.save(auto)).thenReturn(gespeichertesAuto);
+        when(autoRepository.findById(1L)).thenReturn(Optional.of(auto));
 
-        Auto result = autoService.neuesAutoHinzufuegen(auto);
+        Optional<Auto> result = autoService.getAutoById(1L);
 
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        verify(autoRepository, times(1)).save(auto);
+        assertTrue(result.isPresent());
+        assertEquals("Tesla", result.get().getMarke());
+    }
+
+    @Test
+    void testUpdateAuto() {
+        Auto existing = new Auto(1L, "BMW", "X1", "ZH123", true, 80.0);
+        Auto updated  = new Auto(null, "BMW", "X5", "ZH123", false, 99.0);
+
+        when(autoRepository.findById(1L)).thenReturn(Optional.of(existing));
+        when(autoRepository.save(existing)).thenReturn(existing);
+
+        Optional<Auto> result = autoService.updateAuto(1L, updated);
+
+        assertTrue(result.isPresent());
+        assertEquals("X5", result.get().getModell());
+        assertFalse(result.get().isVerfuegbar());
+    }
+
+    @Test
+    void testDeleteAuto() {
+        when(autoRepository.existsById(1L)).thenReturn(true);
+
+        boolean deleted = autoService.deleteAuto(1L);
+
+        assertTrue(deleted);
+        verify(autoRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void testDeleteAuto_NotFound() {
+        when(autoRepository.existsById(1L)).thenReturn(false);
+
+        boolean deleted = autoService.deleteAuto(1L);
+
+        assertFalse(deleted);
+        verify(autoRepository, never()).deleteById(anyLong());
     }
 }
