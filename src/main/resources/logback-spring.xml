@@ -1,28 +1,61 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <!-- Relativer Pfad zum Log-Verzeichnis -->
-    <property name="LOG_DIR" value="autovermietungTest/LoggerErgebnisse" />
-
-    <!-- Appender für Log-Dateien -->
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/autovermietung.log</file>
-
-        <!-- Tägliche Rotation der Log-Dateien -->
+    <!-- Allgemeine Applikationslogs -->
+    <appender name="APP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/app/app.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/autovermietung.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>logs/app/app.%d{yyyy-MM-dd}.log</fileNamePattern>
+             <!-- <maxHistory>30</maxHistory> weglassen -->
         </rollingPolicy>
-
-        <!-- Format der Log-Zeilen -->
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Root Logger Konfiguration -->
+    <!-- Fehlerlogs -->
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/error/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/error/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+             <!-- <maxHistory>30</maxHistory> weglassen -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- Meldungen Booking -->
+    <appender name="BOOKING_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/booking/booking.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/booking.booking.%d{yyyy-MM-dd}.log</fileNamePattern>
+             <!-- <maxHistory>30</maxHistory> weglassen -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- Datenbank Meldungen -->
+    <appender name="DATABASE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/database/database.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/database/database.%d{yyyy-MM-dd}.log</fileNamePattern>
+             <!-- <maxHistory>30</maxHistory> weglassen -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root Logger -->
     <root level="INFO">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="APP"/>
     </root>
+
+    <!-- Fehler separat loggen -->
+    <logger name="org.springframework" level="ERROR" additivity="false">
+        <appender-ref ref="ERROR_LOG"/>
+    </logger>
 
 </configuration>

@@ -8,7 +8,7 @@
 | --------------------------- | ----------------------------------- |
 | GitHub Repository erstellen | ✅ Existiert, aktuelle Version lokal |
 | Eclipse Projekt erstellen   | ✅ Backend-Projekt erstellt          |
-| VS Code Projekt erstellen   | ⚠️ Noch nicht erledigt               |
+| VS Code Projekt erstellen   | ✅ Erledigt!                         |
 | PostgreSQL DB anlegen       | ✅ DB existiert                      |
 
 ------
@@ -17,12 +17,12 @@
 
 | Task                      | Status / Kommentar                                           |
 | ------------------------- | ------------------------------------------------------------ |
-| Entities erstellen        | ✅ Auto.java existiert (`@Entity` vorhanden)  ⚠️ Customer.java & Booking.java noch pendent |
-| Repositories erstellen    | ✅ AutoRepository.java existiert  ⚠️ CustomerRepository & BookingRepository pendent |
-| Services erstellen        | ✅ AutoService.java existiert  ⚠️ CustomerService & BookingService pendent |
-| REST Controller erstellen | ✅ AutoController.java existiert (`/api/autos` funktioniert)  ⚠️ CustomerController & BookingController pendent |
+| Entities erstellen        | ✅ Auto.java existiert (`@Entity` vorhanden)                  |
+| Repositories erstellen    | ✅ AutoRepository.java existiert  <br/> ⚠️ CustomerRepository & BookingRepository pendent |
+| Services erstellen        | ✅ AutoService.java existiert  <br/>⚠️ CustomerService & BookingService pendent |
+| REST Controller erstellen | ✅ AutoController.java existiert (`/api/autos` funktioniert)  <br/>⚠️ CustomerController & BookingController pendent |
 | Logging einrichten        | ⚠️ Noch nicht eingerichtet                                    |
-| Unit-Tests schreiben      | ✅ AutoServiceTest & AutoRepositoryTest existieren  ⚠️ Customer/Booking Tests pendent |
+| Unit-Tests schreiben      | ✅ AutoServiceTest & AutoRepositoryTest existieren  <br/>⚠️ Customer/Booking Tests pendent |
 
 ## 💻 Phase 2 – Frontend: Grundgerüst
 
@@ -74,3 +74,4 @@
 | README + Setup-Guide         | ⚠️ Noch pendent     |
 | GitHub final push            | ⚠️ Noch pendent     |
 | Präsentationsmaterial        | ⚠️ Noch pendent     |
+
