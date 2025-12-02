@@ -1,7 +1,7 @@
 package ch.juventus.autovermietung.service;
 
-import ch.juventus.autovermietung.model.Auto;
-import ch.juventus.autovermietung.repository.AutoRepository;
+import ch.juventus.autovermietung.model.*;
+import ch.juventus.autovermietung.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -9,20 +9,27 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class AutoServiceTest {
 
-    private AutoRepository autoRepository;
-    private AutoService autoService;
+	private AutoRepository autoRepository;
+	private CustomerRepository customerRepository;
+	private BookingRepository bookingRepository;
+	private AutoService autoService;
 
-    @BeforeEach
-    void setup() {
-        autoRepository = Mockito.mock(AutoRepository.class);
-        autoService = new AutoService(autoRepository);
-    }
+
+	@BeforeEach
+	void setup() {
+	    autoRepository = Mockito.mock(AutoRepository.class);
+	    customerRepository = Mockito.mock(CustomerRepository.class);
+	    bookingRepository = Mockito.mock(BookingRepository.class);
+	    autoService = new AutoService(autoRepository, customerRepository, bookingRepository);
+	}
 
     @Test
     void testCreateAuto() {
@@ -98,4 +105,40 @@ class AutoServiceTest {
         assertFalse(deleted);
         verify(autoRepository, never()).deleteById(anyLong());
     }
+    
+    @Test
+    void testVermieteAuto() {
+        Auto auto = new Auto(1L, "BMW", "X5", "ZH123456", true, 100.0);
+        Customer customer = new Customer(1L, "Max", "Mustermann", "max@test.ch", "0123456789");
+
+        LocalDate start = LocalDate.of(2025, 12, 10);
+        LocalDate end = LocalDate.of(2025, 12, 12); // 3 Tage
+
+        when(autoRepository.findById(1L)).thenReturn(Optional.of(auto));
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+        when(autoRepository.save(auto)).thenReturn(auto);
+        when(bookingRepository.save(any())).thenAnswer(i -> i.getArgument(0));
+
+        double preis = autoService.vermieteAuto(1L, 1L, start, end);
+
+        assertEquals(300.0, preis);
+        assertFalse(auto.isVerfuegbar());
+        verify(autoRepository, times(1)).save(auto);
+        verify(bookingRepository, times(1)).save(any());
+    }
+    
+    @Test
+    void testRueckgabeAuto() {
+        Auto auto = new Auto(1L, "BMW", "X5", "ZH123456", false, 100.0);
+
+        when(autoRepository.findById(1L)).thenReturn(Optional.of(auto));
+        when(autoRepository.save(auto)).thenReturn(auto);
+
+        autoService.rueckgabeAuto(1L);
+
+        assertTrue(auto.isVerfuegbar());
+        verify(autoRepository, times(1)).save(auto);
+    }
+
+
 }

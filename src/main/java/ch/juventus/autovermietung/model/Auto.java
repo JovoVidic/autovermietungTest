@@ -7,6 +7,7 @@ public class Auto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //Eintraege fuer die Datenbank-Tabelle
     private Long id;
 
     private String marke;

@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 
 @RestController
 @RequestMapping("/api/autos")
@@ -50,4 +53,25 @@ public class AutoController {
             throw new RuntimeException("Auto nicht gefunden mit ID " + id);
         }
     }
+    
+    //Vermietung
+    @PostMapping("/{autoId}/vermieten")
+    public double vermieteAuto(
+            @PathVariable Long autoId,
+            @RequestParam Long customerId,
+            @RequestParam String startDatum,
+            @RequestParam String endDatum) {
+
+        LocalDate start = LocalDate.parse(startDatum);
+        LocalDate end = LocalDate.parse(endDatum);
+
+        return autoService.vermieteAuto(autoId, customerId, start, end);
+    }
+    
+    //Rückgabe
+    @PutMapping("/{autoId}/rueckgabe")
+    public void rueckgabeAuto(@PathVariable Long autoId) {
+        autoService.rueckgabeAuto(autoId);
+    }
+
 }
