@@ -15,14 +15,16 @@
 
 ## 🔧 Phase 1 – Backend: Grundgerüst
 
-| Task                      | Status / Kommentar                                           |
-| ------------------------- | ------------------------------------------------------------ |
-| Entities erstellen        | ✅ Auto.java existiert (`@Entity` vorhanden)                  |
-| Repositories erstellen    | ✅ AutoRepository.java existiert  <br/> ⚠️ CustomerRepository & BookingRepository pendent |
-| Services erstellen        | ✅ AutoService.java existiert  <br/>⚠️ CustomerService & BookingService pendent |
-| REST Controller erstellen | ✅ AutoController.java existiert (`/api/autos` funktioniert)  <br/>⚠️ CustomerController & BookingController pendent |
-| Logging einrichten        | ⚠️ Noch nicht eingerichtet                                    |
-| Unit-Tests schreiben      | ✅ AutoServiceTest & AutoRepositoryTest existieren  <br/>⚠️ Customer/Booking Tests pendent |
+| Task                        | Status / Kommentar                                                                                                                                                                                                                                          |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Entities erstellen          | ✅ Auto.java, Customer.java, Booking.java existieren (`@Entity` vorhanden)                                                                                                                                                                                   |
+| Repositories erstellen      | ✅ AutoRepository.java, CustomerRepository.java, BookingRepository.java existieren                                                                                                                                                                           |
+| Services erstellen          | ✅ AutoService.java, CustomerService.java, BookingService.java existieren <br/>✅ Logging in allen Services implementiert (`APP_LOG`, `ERROR_LOG`, `DATABASE_LOG`, `BOOKING_LOG`)                                                                             |
+| REST Controller erstellen   | ✅ AutoController.java, CustomerController.java, BookingController.java existieren <br/>✅ Endpunkte `/api/autos`, `/api/customers`, `/api/bookings` funktionsfähig <br/>✅ Logging in allen Controllern implementiert (`APP_LOG`, `ERROR_LOG`, `BOOKING_LOG`) |
+| Logging einrichten          | ✅ Logging für CRUD-Operationen und Business-Events implementiert                                                                                                                                                                                            |
+| Unit-Tests schreiben        | ✅ AutoServiceTest & AutoRepositoryTest existieren <br/>✅ CustomerControllerTest + BookingControllerTest existieren und decken GET/POST/PUT/DELETE ab <br/>⚠️ Service-Tests für CustomerService & BookingService noch teilweise pendent                      |
+| Swagger / API-Dokumentation | ✅ Swagger UI erreichbar unter `/swagger-ui.html` <br/>✅ Endpunkte dokumentiert, kann für Testing & API-Referenz genutzt werden                                                                                                                              |
+
 
 ## 💻 Phase 2 – Frontend: Grundgerüst
 

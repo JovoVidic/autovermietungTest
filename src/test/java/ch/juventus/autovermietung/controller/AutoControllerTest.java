@@ -59,7 +59,8 @@ class AutoControllerTest {
         when(autoService.getAutoById(2L)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/autos/2"))
-                .andExpect(status().isInternalServerError());
+        .andExpect(status().isNotFound());
+
     }
 
     @Test

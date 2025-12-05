@@ -2,7 +2,10 @@ package ch.juventus.autovermietung.controller;
 
 import ch.juventus.autovermietung.model.Auto;
 import ch.juventus.autovermietung.service.AutoService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +33,7 @@ public class AutoController {
     @GetMapping("/{id}")
     public Auto getAuto(@PathVariable Long id) {
         return autoService.getAutoById(id)
-                .orElseThrow(() -> new RuntimeException("Auto nicht gefunden mit ID " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     // POST – neues Auto hinzufügen
